@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+{% load static %}
+<head>
+    <style>
+        g {
+          border: 10px solid #5DADE2 ;
+        }
+    </style>
+    <style>
+        table, th, td {
+          border: 20px solid #5DADE2;
+          border-collapse: collapse;
+        }
+    </style>
+</head>
+{% if form %}
+    <body>
+        <form action="." method="post" id="search-form">
+            {% csrf_token %}
+            <g><input s="background-color:blue" type="text" placeholder="Type image name..." name="image_name" maxlength="100" required="" id="id_image_name"></g>
+            <g><input type="submit" value="Submit"></g>
+        </form>
+    </body><br><br>
+{% endif %}
+
+
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {box-sizing: border-box}
+.mySlides1, .mySlides2 {display: none}
+img {vertical-align: middle;}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 68%;
+  width: 48%;
+  padding: 16px;
+  margin-top: -40px;
+  color: white;
+  font-weight: bold;
+  font-size: 40px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 10px 0 0 3px;
+}
+
+/* On hover, add a grey background color */
+.prev:hover, .next:hover {
+  background-color: #f1;
+  color: black;
+}
+</style>
+</head>
+<body>
+
+<div class="slideshow-container">
+    {% if images %}
+        {% for i in images%}
+            <div class="mySlides1">
+                <table style="width:40%">
+                    <tr>
+                        <td colspan="3" style="background-color:#5DADE2"><center><h2>{{name}}</h2></center><br><img src="{{i}}" width="550" height="400"></td>
+                    </tr>
+                  <tr>
+                    <td>Title</td>
+                    <td>{{name| upper}}</td>
+                  </tr>
+                  <tr>
+                    <td>make</td>
+                    <td>Canon</td>
+                  </tr>
+                  <tr>
+                    <td>model</td>
+                    <td>Canon EOS 40D</td>
+                  </tr>
+                    <tr>
+                    <td>exposure_time</td>
+                    <td>0.1</td>
+                  </tr>
+                    <tr>
+                    <td>aperture</td>
+                    <td>4.3658</td>
+                  </tr>
+                </table>
+            </div>
+        {% endfor %}
+        <a class="prev" onclick="plusSlides(-1, 0)">&#x2190;</a>
+        <a class="next" onclick="plusSlides(1, 0)">&#x2192;</a>
+    {% endif %}
+</div>
+
+
+<script>
+let slideIndex = [1,1];
+let slideId = ["mySlides1"]
+showSlides(1, 0);
+
+function plusSlides(n, no) {
+  showSlides(slideIndex[no] += n, no);
+}
+
+function showSlides(n, no) {
+  let i;
+  let x = document.getElementsByClassName(slideId[no]);
+  if (n > x.length) {slideIndex[no] = 1}
+  if (n < 1) {slideIndex[no] = x.length}
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";
+  }
+  x[slideIndex[no]-1].style.display = "block";
+}
+</script>
+{% if images %}
+    <h5>Click here for download all images in to PDF :<button><a href="/image/images_pdf/">Click Here</a> </button></h5>
+{% endif %}
+{% if response %}
+<h5>{{response}}</h5>
+    <button><a href="/image/search/">Back to search page</a></button>
+{% endif %}
+
+</body>
+</html>
